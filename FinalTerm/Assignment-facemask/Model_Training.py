@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 tf.config.list_physical_devices('GPU')
 
-EPOCHS = 2
+EPOCHS = 20
 INITIAL_LEARNING_RATE = 1e-4
 BATCH_SIZE = 32
 
