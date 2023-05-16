@@ -23,7 +23,6 @@ import tensorflow as tf
 tf.config.list_physical_devices('GPU')
 
 EPOCHS = 20
-INITIAL_LEARNING_RATE = 1e-4
 BATCH_SIZE = 32
 
 print(">>>> Loading Dataset <<<<")
@@ -66,8 +65,9 @@ aug = ImageDataGenerator(
     fill_mode="nearest")
 
 
-# CNN: VGG19
-baseModel = VGG19(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+# CNN: MobileNetV2
+baseModel = MobileNetV2(weights="imagenet", include_top=False,
+                        input_tensor=Input(shape=(224, 224, 3)))
 
 # Create models
 headModel = baseModel.output
@@ -84,8 +84,6 @@ with tf.device('/GPU:0'):
     # compiling the model
     print("MODEL Compilation is started >>")
     learning_rate = 0.001
-    decay_rate = learning_rate / 10
-    momentum = 0.9
     opt = tf.keras.optimizers.Adam(learning_rate=learning_rate)
     model.compile(loss="binary_crossentropy", optimizer=opt,
                   metrics=["accuracy"])
